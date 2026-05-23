@@ -651,6 +651,18 @@ video {
   display: flex;
 }
 
+.flex-col {
+  flex-direction: column;
+}
+
+.h-full {
+  height: 100%;
+}
+
+.mt-auto {
+  margin-top: auto;
+}
+
 .grid {
   display: grid;
 }
