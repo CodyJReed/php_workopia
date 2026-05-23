@@ -83,6 +83,6 @@ class Router {
             }
         }
 
-        $this->error();
+        $this->error(403);
     }
 }
