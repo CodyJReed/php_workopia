@@ -5,9 +5,10 @@
  * 
  * @param string $path
  * @return string 
- */ 
-function basePath($path = '') {
-    return __DIR__. '/'. $path;
+ */
+function basePath($path = '')
+{
+    return __DIR__ . '/' . $path;
 }
 
 /**
@@ -17,10 +18,11 @@ function basePath($path = '') {
  * @return void
  */
 
-function loadView($name) {
+function loadView($name)
+{
     $viewPath = basePath("views/{$name}.view.php");
 
-     if (file_exists($viewPath)) {
+    if (file_exists($viewPath)) {
         require $viewPath;
     } else {
         echo "View {$name} not found.";
@@ -34,7 +36,8 @@ function loadView($name) {
  * @return void
  */
 
-function loadViewPartial($name) {
+function loadViewPartial($name)
+{
     $partialPath = basePath("views/partials/{$name}.php");
 
     if (file_exists($partialPath)) {
@@ -50,7 +53,8 @@ function loadViewPartial($name) {
  * @param mixed $value
  * @return void
  */
-function inspect($value) {
+function inspect($value)
+{
     echo '<pre>';
     var_dump($value);
     echo '</pre>';
@@ -62,7 +66,8 @@ function inspect($value) {
  * @param mixed $value
  * @return void
  */
-function inspectAndDie($value) {
+function inspectAndDie($value)
+{
     echo '<pre>';
     var_dump($value);
     echo '</pre>';

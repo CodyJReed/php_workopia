@@ -1,6 +1,7 @@
 <?php
 
-class Router {
+class Router
+{
     protected $routes = [];
 
     /**
@@ -11,8 +12,9 @@ class Router {
      * @param string $controller
      * @return void
      */
-    public function registerRoute($method, $uri, $controller) {
-         $this->routes[] = [
+    public function registerRoute($method, $uri, $controller)
+    {
+        $this->routes[] = [
             'method' => $method,
             'uri' => $uri,
             'controller' => $controller
@@ -26,7 +28,8 @@ class Router {
      * @param string $controller
      * @return void
      */
-    public function get($uri, $controller) {
+    public function get($uri, $controller)
+    {
         $this->registerRoute('GET', $uri, $controller);
     }
 
@@ -37,7 +40,8 @@ class Router {
      * @param string $controller
      * @return void
      */
-    public function post($uri, $controller) {
+    public function post($uri, $controller)
+    {
         $this->registerRoute('POST', $uri, $controller);
     }
 
@@ -48,7 +52,8 @@ class Router {
      * @param string $controller
      * @return void
      */
-    public function put($uri, $controller) {
+    public function put($uri, $controller)
+    {
         $this->registerRoute('PUT', $uri, $controller);
     }
 
@@ -59,7 +64,8 @@ class Router {
      * @param string $controller
      * @return void
      */
-    public function delete($uri, $controller) {
+    public function delete($uri, $controller)
+    {
         $this->registerRoute('DELETE', $uri, $controller);
     }
 
@@ -70,7 +76,8 @@ class Router {
      * @return void
      */
 
-    public function error($httpCode = 404) {
+    public function error($httpCode = 404)
+    {
         http_response_code($httpCode);
         loadView("error/{$httpCode}");
         exit;
@@ -83,8 +90,9 @@ class Router {
      * @param string $method
      * @return void
      */
-    public function route($uri, $method) {
-        foreach($this->routes as $route) {
+    public function route($uri, $method)
+    {
+        foreach ($this->routes as $route) {
             if ($route['uri'] === $uri && $route['method'] === $method) {
                 require basePath($route['controller']);
                 return;
