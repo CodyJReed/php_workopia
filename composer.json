@@ -1,0 +1,16 @@
+{
+  "name": "codyjreed/php_workopia",
+  "description": "Job listing application",
+  "authors": [
+    {
+      "name": "CodyJReed",
+      "email": "support@codyjamesreed.com"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "Framework\\": "Framework/",
+      "App\\": "App/"
+    }
+  }
+}
