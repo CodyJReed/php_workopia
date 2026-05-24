@@ -1,5 +1,8 @@
 <?php
 
+// Namespace
+use Framework\Database;
+
 $config = require basePath('config/db.php');
 $db = new Database($config);
 $id = $_GET['id'] ?? '';

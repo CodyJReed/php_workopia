@@ -1,6 +1,10 @@
 <?php
+// Require PSR-4 autoloader
 require __DIR__ . '/../vendor/autoload.php';
 require '../helpers.php';
+
+// Add namespace
+use Framework\Router;
 
 // Create custom autoloader
 // spl_autoload_register(function ($class) {

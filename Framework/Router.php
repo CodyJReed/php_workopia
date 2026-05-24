@@ -1,5 +1,8 @@
 <?php
 
+// Set for namespace use
+namespace Framework;
+
 class Router
 {
     protected $routes = [];
