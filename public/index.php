@@ -1,11 +1,14 @@
 <?php
-session_start();
 // Require PSR-4 autoloader
 require __DIR__ . '/../vendor/autoload.php';
-require '../helpers.php';
 
 // Add namespace
 use Framework\Router;
+use Framework\Session;
+// Start session
+Session::start();
+
+require '../helpers.php';
 
 // Create router instance
 $router = new Router();
