@@ -18,7 +18,6 @@
         </div>
         <!-- Logout Form -->
         <form method="POST" action="/auth/logout" class="inline">
-          <input type="hidden" name="_method" value="delete" />
           <button type="submit" class="text-white hover:underline">Logout</button>
         </form>
         <a

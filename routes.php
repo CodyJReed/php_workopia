@@ -15,4 +15,4 @@ $router->get('/auth/create', 'UserController@create');
 $router->get('/auth/login', 'UserController@login');
 
 $router->post('/auth/register', 'UserController@store');
-$router->delete('/auth/logout', 'UserController@destroy');
+$router->post('/auth/logout', 'UserController@logout');
