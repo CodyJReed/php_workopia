@@ -113,6 +113,7 @@ class ListingController
                 'errors' => $errors,
                 'listing' => $formData
             ]);
+            exit;
         } else {
             // Submit formData
             $fields = [];
@@ -164,7 +165,7 @@ class ListingController
         redirect('/listings');
     }
 
-     /**
+    /**
      * Show target listing edit form
      * 
      * @return void
@@ -189,5 +190,86 @@ class ListingController
         loadView('listings/edit', [
             'listing' => $listing
         ]);
+    }
+
+    /**
+     * Update a listing
+     * 
+     * @param array $params
+     * 
+     * @return void
+     */
+    public function update($params)
+    {
+        $id = $params['id'] ?? '';
+
+        if ($id) {
+            $params = [
+                'id' => $id
+            ];
+
+            $listing = $this->db->query("SELECT * FROM listings WHERE id = :id", $params)->fetch();
+        }
+
+        if (!$listing) {
+            ErrorController::notFound('Listing not found.');
+            return;
+        }
+        // The following borrows heavily from the 'store' method
+        // See method's comments for additional insights
+        $allowedFields = [
+            'title',
+            'description',
+            'salary',
+            'tags',
+            'city',
+            'state',
+            'phone',
+            'email',
+            'requirements',
+            'benefits'
+        ];
+
+        $formData = array_intersect_key($_POST, array_flip($allowedFields));
+        $formData = array_map('sanitize', $formData);
+
+        $requiredFields = ['title', 'description', 'email', 'city', 'state'];
+
+        $errors = [];
+
+        //Loop through required fields
+        foreach ($requiredFields as $field) {
+            //if a form field matching a required fields is empty or not a string...
+            if (empty($formData[$field]) || !Validation::string($formData[$field])) {
+                // Add field to $errors Array
+                $errors[$field] = ucfirst($field) . ' is required.';
+            }
+        }
+
+        if (!empty($errors)) {
+            // Reload view with errors
+            loadView('listings/create', [
+                'errors' => $errors,
+                'listing' => $formData
+            ]);
+            exit;
+        } else {
+            // Submit formData
+            $fields = [];
+
+            foreach (array_keys($formData) as $field) {
+                $fields[] = "{$field} = :{$field}";
+            }
+
+            $fields = implode(', ', $fields);
+
+            $query = "UPDATE listings SET $fields WHERE id = :id";
+            $formData['id'] = $id;
+            $this->db->query($query, $formData);
+
+            $_SESSION['success_message'] = 'Listing updated!';
+
+            redirect('/listings');
+        }
     }
 }
