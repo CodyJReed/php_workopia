@@ -9,23 +9,27 @@
         <div class="message bg-green-100 p-3 my-3">
           This is a success message.
         </div> -->
-        <form>
+        <form method="POST" action="/auth/login">
             <?php loadViewPartial('error', [
                 'errors' => $errors ?? []
             ]) ?>
             <div class="mb-4">
                 <input
-                    type="email"
+                    type="text"
                     name="email"
                     placeholder="Email Address"
-                    class="w-full px-4 py-2 border rounded focus:outline-none" />
+                    class="w-full px-4 py-2 border rounded focus:outline-none"
+                    value="<?= $user['email'] ?? '' ?>" />
+
             </div>
             <div class="mb-4">
                 <input
                     type="password"
                     name="password"
                     placeholder="Password"
-                    class="w-full px-4 py-2 border rounded focus:outline-none" />
+                    class="w-full px-4 py-2 border rounded focus:outline-none"
+                    value="<?= $user['password'] ?? '' ?>" />
+
             </div>
             <button
                 type="submit" class="w-full bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded focus:outline-none">

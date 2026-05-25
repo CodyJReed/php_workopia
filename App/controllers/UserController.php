@@ -46,6 +46,8 @@ class UserController
     {
         $formData = $_POST;
 
+        $formData = array_map('sanitize', $formData);
+
         $errors = [];
 
         // Validation
@@ -124,7 +126,63 @@ class UserController
 
         $params = session_get_cookie_params();
         setcookie('PHPSESSID', '', time() - 86400, $params['path'], $params['domain']);
-        
+
+        redirect('/');
+    }
+
+    /**
+     * Authenticate a user
+     * 
+     * @return void
+     */
+    public function auth()
+    {
+        $formData = $_POST;
+
+        $formData = array_map('sanitize', $formData);
+
+        $errors = [];
+        // Validation
+        if (!Validation::email($formData['email'])) {
+            $errors['email'] = 'Please enter a valid email address.';
+        }
+        if (!Validation::string($formData['password'], 6, 50)) {
+            $errors['password'] = 'Password must be at least 6 characters.';
+        }
+
+        if (!empty($errors)) {
+            loadView('users/login', [
+                'errors' => $errors,
+                'user' => $formData
+            ]);
+            exit;
+        }
+
+        // Check if user exists in DB
+        $params = [
+            'email' => $formData['email']
+        ];
+
+        $match = $this->db->query('SELECT * FROM users WHERE email = :email', $params)->fetch();
+        // If no match is found or password isn't correct...
+        if (!$match || !password_verify($formData['password'], $match->password)) {
+            $errors['email'] = 'Incorrect email or password.';
+
+            loadView('users/login', [
+                'errors' => $errors,
+                'user' => $formData
+            ]);
+            exit;
+        }
+        // Set user session
+        Session::set('user', [
+            'id' => $match->id,
+            'name' => $match->name,
+            'email' => $match->email,
+            'city' => $match->city,
+            'state' => $match->state,
+        ]);
+
         redirect('/');
     }
 }
