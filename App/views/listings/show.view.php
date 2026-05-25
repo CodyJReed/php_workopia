@@ -7,6 +7,7 @@ if (!$listing) {
 <?php loadViewPartial('head'); ?>
 <?php loadViewPartial('navbar'); ?>
 <?php loadViewPartial('hero'); ?>
+<?php loadViewPartial('message'); ?>
 
 
 <section class="container mx-auto p-4 mt-4">
