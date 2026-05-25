@@ -110,7 +110,7 @@ class UserController
             'state' => $formData['state'],
         ]);
         // Add success message;
-        $_SESSION['success_message'] = 'User successfully registered!';
+        Session::setFlashMessage('success_message', 'User successfully registered!');
 
         redirect('/');
     }

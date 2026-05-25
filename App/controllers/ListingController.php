@@ -162,13 +162,13 @@ class ListingController
         }
         // Check Auth
         if (!Authorization::isOwner($listing->user_id)) {
-            $_SESSION['error_message'] = 'You are not authorized to delete this listing.';
+            Session::setFlashMessage('error_message', 'You are not authorized to delete this listing.');
             redirect('/listings/' . $listing->id);
         }
 
         $this->db->query('DELETE FROM listings WHERE id = :id', $params);
         // Set flash message
-        $_SESSION['success_message'] = 'Listing deleted successfully!';
+        Session::setFlashMessage('success_message', 'Listing deleted successfully!');
         redirect('/listings');
     }
 
@@ -196,7 +196,7 @@ class ListingController
 
         // Check Auth
         if (!Authorization::isOwner($listing->user_id)) {
-            $_SESSION['error_message'] = 'You are not authorized to delete this listing.';
+            Session::setFlashMessage('error_message', 'You are not authorized to delete this listing.');
             redirect('/listings/' . $listing->id);
         }
 
@@ -280,7 +280,7 @@ class ListingController
             $formData['id'] = $id;
             $this->db->query($query, $formData);
 
-            $_SESSION['success_message'] = 'Listing updated!';
+            Session::setFlashMessage('success_message', 'Listing updated!');
 
             redirect('/listings');
         }
