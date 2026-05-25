@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use Framework\Database;
+use Framework\Validation;
 
 class ListingController
 {
@@ -55,7 +56,7 @@ class ListingController
             $listing = $this->db->query("SELECT * FROM listings WHERE id = :id", $params)->fetch();
         }
 
-        if(!$listing) {
+        if (!$listing) {
             ErrorController::notFound('Listing not found.');
             return;
         }
@@ -63,5 +64,55 @@ class ListingController
         loadView('listings/show', [
             'listing' => $listing
         ]);
+    }
+
+    /**
+     * Store data in DB
+     * 
+     * @return void
+     */
+    public function store()
+    {
+        $allowedFields = [
+            'title',
+            'description',
+            'salary',
+            'tags',
+            'phone',
+            'email',
+            'requirements',
+            'benefits'
+        ];
+        //Filter two arrays by keys, returning new Array...
+        /// When comparing an Associative array against a traditional 'array_flip'...
+        // ..can be used to flip index => values to bey 'keys'
+        $formData = array_intersect_key($_POST, array_flip($allowedFields));
+        // TODO replace hardcode with dynamic user $value
+        $formData['user_id'] = 1;
+        // Sanitize data against html
+        $formData = array_map('sanitize', $formData);
+
+        $requiredFields = ['title', 'description', 'email', 'city', 'state'];
+
+        $errors = [];
+        //Loop through required fields
+        foreach ($requiredFields as $field) {
+            //if a form field matching a required fields is empty or not a string...
+            if (empty($formData[$field]) || !Validation::string($formData[$field])) {
+                // Add field to $errors Array
+                $errors[$field] = ucfirst($field) . ' is required.';
+            }
+        }
+
+        if (!empty($errors)) {
+            // Reload view with errors
+            loadView('listings/create', [
+                'errors' => $errors,
+                'listing' => $formData
+            ]);
+        } else {
+            // Submit formData
+            echo 'Submitted.';
+        }
     }
 }
