@@ -196,7 +196,7 @@ class ListingController
 
         // Check Auth
         if (!Authorization::isOwner($listing->user_id)) {
-            Session::setFlashMessage('error_message', 'You are not authorized to delete this listing.');
+            Session::setFlashMessage('error_message', 'You are not authorized to edit this listing.');
             redirect('/listings/' . $listing->id);
         }
 
@@ -228,6 +228,13 @@ class ListingController
             ErrorController::notFound('Listing not found.');
             return;
         }
+
+        // Check Auth
+        if (!Authorization::isOwner($listing->user_id)) {
+            Session::setFlashMessage('error_message', 'You are not authorized to edit this listing.');
+            redirect('/listings/' . $listing->id);
+        }
+
         // The following borrows heavily from the 'store' method
         // See method's comments for additional insights
         $allowedFields = [
