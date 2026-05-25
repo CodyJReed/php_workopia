@@ -1,5 +1,6 @@
 <?php loadViewPartial('head'); ?>
 <?php loadViewPartial('navbar'); ?>
+<?php loadViewPartial('message') ?>
 <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6 mt-4 p-3">
   <!-- Job Listing 1: Software Engineer -->
   <?php
@@ -14,7 +15,7 @@
         <ul class="my-4 bg-gray-100 p-4 rounded">
           <?php foreach ($listing as $key => $value) : ?>
             <!-- Salary -->
-            <?php if (strtolower($key) === 'salary') : ?>
+            <?php if (strtolower($key) === 'salary' && $value) : ?>
               <li class="mb-2">
                 <strong><?= ucwords($key) ?>:</strong> $<?= number_format($value, 0, '', ',') ?>
               </li>
@@ -28,7 +29,7 @@
           <?php endforeach; ?>
           <?php foreach ($listing as $key => $value) : ?>
             <!-- Tags -->
-            <?php if (strtolower($key) === 'tags') : ?>
+            <?php if (strtolower($key) === 'tags' && $value) : ?>
               <li class="mb-2">
                 <strong><?= ucwords($key) ?>:</strong> <?= $value ?>
               </li>

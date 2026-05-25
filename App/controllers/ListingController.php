@@ -143,7 +143,8 @@ class ListingController
      * 
      * @return void
      */
-    public function destroy($params) {
+    public function destroy($params)
+    {
         $id = $params['id'];
 
         $params = [
@@ -158,6 +159,8 @@ class ListingController
         }
 
         $this->db->query('DELETE FROM listings WHERE id = :id', $params);
+        // Set flash message
+        $_SESSION['success_message'] = 'Listing deleted successfully!';
         redirect('/listings');
     }
 }

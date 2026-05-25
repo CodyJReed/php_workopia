@@ -32,14 +32,18 @@ if (!$listing) {
             <h2 class="text-xl font-semibold"><?= $listing->title ?></h2>
             <p class="text-gray-700 text-lg mt-2"><?= $listing->description ?></p>
             <ul class="my-4 bg-gray-100 p-4">
+                <?php if($listing->salary) : ?>
                 <li class="mb-2"><strong>Salary:</strong> $<?= number_format($listing->salary, 0, '', ',') ?></li>
+                <?php endif ?>
                 <li class="mb-2">
                     <strong>Location:</strong>
                     <?= ucwords($listing->city) ?>
                 </li>
+                <?php if($listing->tags) : ?>
                 <li class="mb-2">
                     <strong>Tags:</strong> <span><?= ucwords($listing->tags) ?></span>
                 </li>
+                <?php endif ?>
             </ul>
         </div>
     </div>
