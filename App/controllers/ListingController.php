@@ -163,4 +163,31 @@ class ListingController
         $_SESSION['success_message'] = 'Listing deleted successfully!';
         redirect('/listings');
     }
+
+     /**
+     * Show target listing edit form
+     * 
+     * @return void
+     */
+    public function edit($params)
+    {
+        $id = $params['id'] ?? '';
+
+        if ($id) {
+            $params = [
+                'id' => $id
+            ];
+
+            $listing = $this->db->query("SELECT * FROM listings WHERE id = :id", $params)->fetch();
+        }
+
+        if (!$listing) {
+            ErrorController::notFound('Listing not found.');
+            return;
+        }
+
+        loadView('listings/edit', [
+            'listing' => $listing
+        ]);
+    }
 }
