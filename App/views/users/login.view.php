@@ -10,6 +10,9 @@
           This is a success message.
         </div> -->
         <form>
+            <?php loadViewPartial('error', [
+                'errors' => $errors ?? []
+            ]) ?>
             <div class="mb-4">
                 <input
                     type="email"

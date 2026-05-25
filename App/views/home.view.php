@@ -1,4 +1,5 @@
 <?php loadViewPartial('head'); ?>
+<?php loadViewPartial('message') ?>
 <?php loadViewPartial('navbar'); ?>
 <?php loadViewPartial('showcase-search'); ?>
 <?php loadViewPartial('hero'); ?>
