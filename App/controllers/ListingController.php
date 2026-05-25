@@ -78,6 +78,8 @@ class ListingController
             'description',
             'salary',
             'tags',
+            'city',
+            'state',
             'phone',
             'email',
             'requirements',
@@ -95,6 +97,7 @@ class ListingController
         $requiredFields = ['title', 'description', 'email', 'city', 'state'];
 
         $errors = [];
+
         //Loop through required fields
         foreach ($requiredFields as $field) {
             //if a form field matching a required fields is empty or not a string...
@@ -112,7 +115,24 @@ class ListingController
             ]);
         } else {
             // Submit formData
-            echo 'Submitted.';
+            $fields = [];
+            $values = [];
+
+            foreach ($formData as $field => $value) {
+                $fields[] = $field;
+                if ($value === '') {
+                    $formData[$field] = null;
+                }
+                $values[] = ':' . $field;
+            }
+
+            $fields = implode(', ', $fields);
+            $values = implode(', ', $values);
+
+            $query = "INSERT INTO listings ({$fields}) VALUES ({$values})";
+
+            $this->db->query($query, $formData);
+            redirect('/listings');
         }
     }
 }
